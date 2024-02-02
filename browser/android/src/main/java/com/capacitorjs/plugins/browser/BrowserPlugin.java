@@ -28,6 +28,7 @@ public class BrowserPlugin extends Plugin {
     public void load() {
         implementation = new Browser(getContext());
         implementation.setBrowserEventListener(this::onBrowserEvent);
+        implementation.setBrowserEventListenerListener(message -> notifyListeners("browserMessageReceived", message));
     }
 
     @PluginMethod

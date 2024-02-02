@@ -40,6 +40,17 @@ export interface BrowserPlugin {
     listenerFunc: () => void,
   ): Promise<PluginListenerHandle>;
 
+/**
+ * Android & iOS only: Listen for the message received event.
+ * This event is fired when a message is received from the browser.
+ *
+ * @since 1.0.0
+ */
+addListener(
+  eventName: 'browserMessageReceived',
+  listenerFunc: (message: string) => void,
+): Promise<PluginListenerHandle>;
+
   /**
    * Remove all native listeners for this plugin.
    *

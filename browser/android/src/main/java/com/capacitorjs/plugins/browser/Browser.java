@@ -23,6 +23,7 @@ public class Browser {
      */
     interface BrowserEventListener {
         void onBrowserEvent(int event);
+        void onMessageReceived(String message); // New method for message handling
     }
 
     /**
@@ -106,6 +107,8 @@ public class Browser {
 
         CustomTabsIntent tabsIntent = builder.build();
         tabsIntent.intent.putExtra(Intent.EXTRA_REFERRER, Uri.parse(Intent.URI_ANDROID_APP_SCHEME + "//" + context.getPackageName()));
+        tabsIntent.intent.putExtra(Intent.EXTRA_TITLE, "Post Message");
+        tabsIntent.intent.putExtra(Intent.EXTRA_TEXT, "window.postMessage(JSON.stringify({ key: 'value' }))");
 
         isInitialLoad = true;
         group.reset();
@@ -180,5 +183,12 @@ public class Browser {
         }
 
         return browserSession;
+    }
+
+    // New method to handle incoming messages
+    public void handleMessage(String message) {
+        if (browserEventListener != null) {
+            browserEventListener.onMessageReceived(message);
+        }
     }
 }

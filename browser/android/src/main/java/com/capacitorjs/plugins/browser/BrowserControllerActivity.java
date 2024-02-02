@@ -43,6 +43,14 @@ public class BrowserControllerActivity extends Activity {
         implementation.open(url, toolbarColor);
     }
 
+    // Add this method to handle incoming messages from Custom Tabs
+    public void handleMessage(String message) {
+        // Notify the plugin about the received message
+        if (BrowserPlugin.browserControllerListener != null) {
+            BrowserPlugin.browserControllerListener.onMessageReceived(message);
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
